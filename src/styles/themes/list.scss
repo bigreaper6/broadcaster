@@ -1,0 +1,9 @@
+$font-size-normal: 1rem;
+$list-item-icon-font-size: 1.2rem;
+
+@import "~react-toolbox/lib/list/theme";
+
+.list
+{
+	overflow-y: scroll;
+}

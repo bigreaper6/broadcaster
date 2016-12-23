@@ -1,0 +1,13 @@
+# Node
+node_modules
+
+# Editors
+.idea
+*.iml
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+
+# Misc
+output
+*.log

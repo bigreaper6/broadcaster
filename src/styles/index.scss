@@ -1,0 +1,21 @@
+@import "variables";
+@import "fonts";
+@import "~material-design-icons/iconfont/material-icons";
+@import "~react-toolbox/lib/commons";
+
+*
+{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body
+{
+	text-rendering: optimizeLegibility;
+}
+
+#app
+{
+	height: 100%;
+}

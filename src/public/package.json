@@ -1,0 +1,6 @@
+{
+	"name": "broadcaster",
+	"productName": "Broadcaster",
+	"version": "0.0.1",
+	"main": "scripts/main/index.js"
+}
