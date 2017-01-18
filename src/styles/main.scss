@@ -1,18 +1,21 @@
-.panelContent
+.container
 {
 	display: flex;
-	flex: 1;
+	height: 100%;
+	flex-direction: column;
+}
+
+.preview
+{
+	flex: 3;
+
+	background-color: #272;
 }
 
 .footer
 {
-	display: flex;
-	height: 35%;
-}
+	position: relative;
+	height: 250px;
 
-.progressBar
-{
-	flex: 1;
-	justify-content: center;
-	align-self: center;
+	background-color: #728;
 }

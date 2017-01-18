@@ -1,20 +1,13 @@
-import {observable, computed, action} from "mobx";
+import {observable, action} from "mobx";
 import Storage from "../storage";
 
 export default class ScenesStore extends Storage<ScenesStore>
 {
-	@observable _currentScene: string = "Scene";
 	@observable scenes: Scene[] = [new Scene()];
 
 	constructor()
 	{
 		super("scenes.json");
-	}
-
-	@computed
-	get currentScene(): Scene
-	{
-		return this.scenes.find(s => s.name == this._currentScene) as Scene;
 	}
 
 	@action

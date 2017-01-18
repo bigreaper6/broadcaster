@@ -1,7 +1,5 @@
-@import "variables";
 @import "fonts";
 @import "~material-design-icons/iconfont/material-icons";
-@import "~react-toolbox/lib/commons";
 
 *
 {
@@ -10,8 +8,9 @@
 	padding: 0;
 }
 
-body
+html, body
 {
+	height: 100%;
 	text-rendering: optimizeLegibility;
 }
 

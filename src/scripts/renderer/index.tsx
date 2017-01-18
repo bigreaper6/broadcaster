@@ -1,12 +1,9 @@
 import * as React from "react";
 import {render} from "react-dom";
 import {AppContainer} from "react-hot-loader";
-import {ThemeProvider} from "react-css-themr";
-import theme from "./theme";
 import "../../styles/index.scss";
 
 const el = document.getElementById("app");
-
 function renderApp()
 {
 	const routes = require("./routes").default;
@@ -14,9 +11,7 @@ function renderApp()
 	? routes
 	: (
 		<AppContainer>
-			<ThemeProvider theme={theme}>
-				{routes}
-			</ThemeProvider>
+			{routes}
 		</AppContainer>
 	), el);
 }

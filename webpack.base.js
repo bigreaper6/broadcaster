@@ -1,5 +1,6 @@
 const {resolve} = require("path");
 const webpack = require("webpack");
+const {CheckerPlugin} = require("awesome-typescript-loader");
 const CopyPlugin = require("copy-webpack-plugin");
 
 const base = {
@@ -25,7 +26,7 @@ const base = {
 				test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
 				loader: "file-loader"
 			},
-			// todo: react-toolbox v2/postcss?
+			// TODO: react-toolbox v2/postcss?
 			{
 				test: /index\.scss$/,
 				loaders: [
@@ -55,6 +56,7 @@ const base = {
 		new CopyPlugin([
 			{from: "src/public"}
 		]),
+		new CheckerPlugin(),
 		new webpack.IgnorePlugin(/lib-cov/),
 		new webpack.ExternalsPlugin("commonjs", [
 			"electron-devtools-installer"

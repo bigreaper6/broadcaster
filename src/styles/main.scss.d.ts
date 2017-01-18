@@ -1,3 +1,3 @@
-export const panelContent: string;
+export const container: string;
+export const preview: string;
 export const footer: string;
-export const progressBar: string;
