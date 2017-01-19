@@ -1,3 +1,8 @@
 {
-	"scenes.current": "Current Scene"
+	"scenes": {
+		"defaultName": "Scene"
+	},
+	"sources": {
+		"listTitle": "Sources"
+	}
 }

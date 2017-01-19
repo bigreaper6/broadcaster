@@ -16,6 +16,6 @@ i18next
 				translation: require("./translations/en-US.json")
 			}
 		}
-	}, (_, _t) => t = _t)
+	}, (_, _t) => t = _t);
 
-export default t;
+export default t as any as i18next.TranslationFunction;
