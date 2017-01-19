@@ -85,7 +85,7 @@ export default class Storage<T extends Storage<any>>
 
 export function noSerialize(target: any, key: string)
 {
-	if (!target._noSerialize) target._noSerialize = ["_blocked"];
+	if (!target._noSerialize) target._noSerialize = ["_noSerialize"];
 	target._noSerialize.push(key);
 }
 
