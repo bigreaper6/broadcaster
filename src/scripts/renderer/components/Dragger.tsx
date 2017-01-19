@@ -61,7 +61,7 @@ export default class Dragger extends React.Component<DraggerProps, any>
 	updateProp(prop: number)
 	{
 		this.props.uiStore.footerHeight = prop;
-		(this.element as HTMLElement).style["height"] = prop + "px";
+		(this.element as HTMLElement).style.height = prop + "px";
 	}
 
 	render()
