@@ -12,6 +12,8 @@ html, body
 {
 	height: 100%;
 	text-rendering: optimizeLegibility;
+	// just electron (webkit)
+	-webkit-user-select: none;
 }
 
 #app

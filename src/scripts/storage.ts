@@ -4,40 +4,62 @@ import {writeFile, writeFileSync, readFile} from "mz/fs";
 
 function replacer(storage: any, key: string, value: string)
 {
-	if (storage._blocked.includes(key)) return;
+	if (storage._noSerialize.includes(key)) return;
 	else return value;
 }
 
-export default class Storage<T>
+export default class Storage<T extends Storage<any>>
 {
+	@noSerialize private _args: any[];
 	@noSerialize private _isWriting: boolean;
 	@noSerialize private _path: string;
+	@noSerialize _noSerialize: string[];
+	@noSerialize _serializeWith: Map<string, [Function, Function | undefined]>;
 
-	constructor(...fileName: string[])
+	constructor(fileName: string, ...args: any[])
 	{
-		this._path = join((app || remote.app).getPath("userData"), ...fileName);
+		this._args = args;
+		this._path = join((app || remote.app).getPath("userData"), fileName);
 	}
 
-	deserialize(data: any): any
+	private deserialize(data: any)
 	{
+		if (!this._serializeWith) return data;
+		for (let entry of this._serializeWith.entries())
+		{
+			const name = entry[0];
+			const deserialize = entry[1][0];
+			data[name] = deserialize(data[name], this);
+		}
+
 		return data;
 	}
 
-	serialize(data: any): any
+	private serialize(data: any)
 	{
+		if (!this._serializeWith) return data;
+		for (let entry of this._serializeWith.entries())
+		{
+			const name = entry[0];
+			const serialize = entry[1][1];
+			if (!serialize) break;
+
+			data[name] = serialize(data[name], this);
+		}
+
 		return data;
 	}
 
-	async load(data: {new(): T}): Promise<T>
+	async load(data: {new(..._: any[]): T}): Promise<T>
 	{
 		try
 		{
 			const data = await readFile(this._path, "utf8");
-			return JSON.parse(this.deserialize(data));
+			return this.deserialize(JSON.parse(data));
 		}
 		catch (e)
 		{
-			if (e.code == "ENOENT") return new data();
+			if (e.code == "ENOENT") return this.deserialize(new data(this._args));
 			else throw e;
 		}
 	}
@@ -63,6 +85,14 @@ export default class Storage<T>
 
 export function noSerialize(target: any, key: string)
 {
-	if (!target._blocked) target._blocked = ["_blocked"];
-	target._blocked.push(key);
+	if (!target._noSerialize) target._noSerialize = ["_blocked"];
+	target._noSerialize.push(key);
+}
+
+export function serializeWith<T extends Storage<any>>(deserialize: (obj: any, self: T) => any, serialize?: (obj: any, self: T) => any)
+{
+	return (target: Storage<T>, key: string) => {
+		if (!target._serializeWith) target._serializeWith = new Map();
+		target._serializeWith.set(key, [deserialize, serialize]);
+	}
 }

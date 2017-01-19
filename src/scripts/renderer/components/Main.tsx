@@ -3,21 +3,21 @@ import {remote} from "electron";
 import {observable} from "mobx";
 import {observer} from "mobx-react";
 import ConfigStore from "../../stores/config";
-import UiStore from "../../stores/ui";
 import ScenesStore from "../../stores/scenes";
+import UiStore from "../../stores/ui";
 import * as styles from "../../../styles/main.scss";
 import Sources from "./Sources";
 import Dragger from "./Dragger";
 
 const configStore = new ConfigStore();
-const uiStore = new UiStore();
 const scenesStore = new ScenesStore();
+const uiStore = new UiStore(scenesStore);
 
 function saveStores()
 {
 	configStore.saveSync();
-	uiStore.saveSync();
 	scenesStore.saveSync();
+	uiStore.saveSync();
 }
 
 @observer
@@ -28,8 +28,8 @@ export default class Main extends React.Component<any, any>
 	async componentDidMount()
 	{
 		await configStore.init();
-		await uiStore.init();
 		await scenesStore.init();
+		await uiStore.init();
 		this.loaded = true;
 		(window as any)["save"] = saveStores;
 
@@ -50,9 +50,9 @@ export default class Main extends React.Component<any, any>
 				</section>
 				<footer className={styles.footer} ref={e => (this.refs["dragger"] as any).setElement(e)}>
 					<Dragger ref="dragger" uiStore={uiStore}
-						property="height" min={200} max={window.innerHeight - 100} />
+						min={200} max={window.innerHeight - 100} />
 
-					<Sources uiStore={uiStore} scenesStore={scenesStore} />
+					<Sources uiStore={uiStore} />
 				</footer>
 			</div>
 		) : (
